@@ -1,0 +1,41 @@
+#Import the Africa's Talking SDK
+import africastalking
+
+#Set up your credentials
+username = "YOUR_USERNAME_GOES_HERE" "fill in with sandbox"
+api_key = "YOUR_API_KEY_GOES_HERE" "fill in with api_key"
+"replace these variables later"
+
+#Initialize the SDK
+africastalking.initialize(username, api_key)
+#The product sheet has been set up in the background 
+#after you set up the product name below
+
+#Define the Payment service
+#Class has been assigned to variable
+payments = africastalking.Payment
+
+#Set your product name
+product_name = "YOUR_PRODUCT_NAME_GOES_HERE"
+
+#Set the phone number you want and set it to the international format
+phone_number = "YOUR_PHONE_NUMBER_GOES_HERE"
+
+#Set the 3 letter ISO currency code and checkout amount
+currency_code = "KES"
+amount = 100.0
+
+#You can add in your own metadata which will be resent back to you
+#This is an optional step
+#For the final payment notification
+metadata = {
+    "agentId": "",
+    "productId": ""
+}
+
+#Time to send and we'll handle the rest
+try:
+    res = payments.mobile_checkout(product_name, phone_number, currency_code, amount, metadata)
+    print(res)
+except Exception as e:
+    print(f"Houston we have a problem {e}")
