@@ -1,0 +1,59 @@
+def bruteforce_max_subarray(A):
+    """
+    Implements brute-force maximum subarray finding.
+    
+    Parameters
+    ----------
+    A : list
+        a NON-EMPTY list of floats
+    
+    Returns
+    -------
+    tuple
+        - the start index of the max subarray
+        - the end index of the max subarray
+        - the value of the maximum subarray
+        
+    """
+    # YOUR CODE HERE
+    
+    maximum = 0  #The value of the maximum subarray
+    for i in range(len(A)+1): #Help us loop from teh second element onwards 
+        for j in range(len(A)+1):
+            potential_max = sum(A[i:j+1]) #Sum of the elements in the list in increasing order
+
+            if maximum < potential_max: #Comparing to check for value updates
+                maximum = potential_max  #Reassigning the maximum if the new value is greater
+                start_index = i  #Storing the start and end indexes of the new maximum value(s)
+                end_index = j
+    return start_index, end_index, maximum
+
+def bruteforce_min_subarray(A):
+    """
+    Implements brute-force minimum subarray finding.
+    
+    Parameters
+    ----------
+    A : list
+        a NON-EMPTY list of floats
+    
+    Returns
+    -------
+    tuple
+        - the start index of the minimum subarray
+        - the end index of the minimum subarray
+        - the value of the minimum subarray
+        
+    """
+    # YOUR CODE HERE
+    minimum = 0  #The value of the minimum subarray
+    for i in range(len(A)+1): #Help us loop from the second element onwards 
+        for j in range(len(A)+1):
+            potential_min = sum(A[i:j+1]) #Sum of the elements in the list in increasing order
+
+            if minimum > potential_min: #Comparing to check for value updates
+                minimum = potential_min  #Reassigning the minimum if the new value is lesser
+                start_index = i  #Storing the start and end indexes of the new minimum value(s)
+                end_index = j
+    return start_index, end_index, minimum
+
