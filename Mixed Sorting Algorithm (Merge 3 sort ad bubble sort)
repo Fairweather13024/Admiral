@@ -1,0 +1,77 @@
+def merge_3_sort_threshold(array, p, q):
+    '''
+    Sorts the input array with different algorithms in place depending on the size of the array.
+    
+    Inputs:
+    array - List to be sorted
+    p - The first index in the list/ sub list
+    q - The last index of the list/ sub list
+    
+    Output:
+    array - Sorted array
+    
+    '''
+    # YOUR CODE HERE
+        # check if more than one elements remain between array[p] and array[q]
+        # otherwise return the single element remaining
+    if len(array) == 1:
+        return array
+    
+    if len(array) > 60:
+        if q - p == 0:
+            return array
+
+        if q > p:
+            # Calculate where one-third and two-thirds of the input array are
+            third = p + ((q - p) // 3)
+            two_thirds = p + (2 * ((q - p) // 3))
+
+            # Call merge_3_sort() on the three sublists
+            merge_3_sort(array, p, third)
+            merge_3_sort(array, third + 1, two_thirds)
+            merge_3_sort(array, two_thirds + 1, q)
+
+            # Call merge_3() on the three sorted sublists to combine them
+            # This can be either done as a return or in-place
+            merge_3(array, p, third, two_thirds, q)
+
+            # return the sorted array 
+        return array
+    else: 
+        #call bubble_sort if the array is smaller than len(90)
+        return bubble_sort(array)
+        
+    
+def merge_3(array, p, q, r, s):
+    # YOUR CODE HERE
+    left = array[p : q + 1]
+    mid = array[q + 1 : r + 1]
+    right = array[r + 1 : s + 1]
+    
+    # append infinity to the end of each placeholder list
+    left.append(float("inf"))
+    mid.append(float("inf"))
+    right.append(float("inf"))
+    
+    i, j, k = 0, 0, 0
+    
+    # fill each position in array[p] to array[q] 
+        # use the smallest of the front elements of the placeholder lists
+    for l in range(p, s+1):
+        if left[i] <= right[k] and left[i] <= mid[j]:
+            array[l] = left[i]
+            i += 1
+        elif mid[j] <= right[k] and mid[j] <= left[i]:
+            array[l] = mid[j]
+            j += 1
+        else:
+            array[l] = right[k]
+            k += 1
+            
+    return array
+assert merge_3_sort_threshold ([], 0, 0) == ([], 'Used bubble sort')
+assert merge_3_sort_threshold([0], 0, 0)  == [0], 'Used bubble sort'
+assert merge_3_sort_threshold([1,-1], 0, 1) == ([-1,1], 'Used bubble sort')
+assert merge_3_sort_threshold([-1,-2,-3], 0, 2) == ([-3,-2,-1], 'Used bubble sort')
+assert merge_3_sort_threshold([1, 2, 3], 0, 2) == ([1, 2, 3], 'Used bubble sort')
+assert merge_3_sort_threshold([1, 2, 3, 3], 0, 3) == ([1, 2, 3, 3], 'Used bubble sort')
