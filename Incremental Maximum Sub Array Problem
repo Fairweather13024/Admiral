@@ -1,0 +1,77 @@
+def bruteforce_max_subarray(A):
+    """
+    Implements brute-force maximum subarray finding.
+    
+    Parameters
+    ----------
+    A : list
+        a NON-EMPTY list of floats
+    
+    Returns
+    -------
+    tuple
+        - the start index of the max subarray
+        - the end index of the max subarray
+        - the value of the maximum subarray
+        
+    """
+    # YOUR CODE HERE
+    global mx
+    mx = 0  #The value of the maximum subarray
+
+    for i in range(len(A)+1): #Help us loop from teh second element onwards 
+        for j in range(len(A)+1):
+            potential_max = sum(A[i:j+1]) #Sum of the elements in the list in increasing order
+
+            if mx < potential_max: #Comparing to check for value updates
+                mx = potential_max  #Reassigning the maximum if the new value is greater
+                start_index = i  #Storing the start and end indexes of the new maximum value(s)
+                end_index = j
+    return mx
+
+ def incremental_max_subarray(x, mx):
+    """ 
+    Parameters
+    ----------
+    x : list
+        A NON-EMPTY list of numbers (e.g., the 
+        array B in the first two questions above)
+        
+        If x has 1 element: returns the value of 
+        the element regardless of the value of mx
+        
+    mx 
+        The maximum subarray of x excluding its 
+        ast element (i.e., compute the maximum 
+        subarray of the input array x considering 
+        only its first len(x) - 1 elements)
+    
+    Returns
+    -------
+    int
+        The maximum subarray of the array x
+    
+    Example
+    -------
+    Using the array B in question 2, the result 
+    of incremental_max_subarray(B, 4) is 10: 
+    
+        10 = 8 + 1 - 2 -1 + 4 
+    
+    
+    """
+    # YOUR CODE HERE
+    #Fulfilling the check for the maximum sub array of a list with no elements and 1 element
+    if len(x) == 0:
+        raise ValueError('Your input is empty.')
+    elif len(x) == 1:
+        return x[0]
+    
+    #Finding the sum of the maximuj sub array through a loop
+    else:
+        x.append(0)
+        index = x.index(mx)
+        global summation
+        summation = sum(x[index:-1])
+    
+        return summation #set to a global variable so that I can access it in other functions
