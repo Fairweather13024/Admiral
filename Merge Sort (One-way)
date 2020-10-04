@@ -1,0 +1,65 @@
+def merge(A, p, q, r):
+    '''
+    This function takes a list, splits it as evenly as possible at point q and merges the new sub arrays created in 
+    a sorted manner.
+    
+    inputs:
+    A - A list of size n
+    p - The first index in array A
+    q - The mid index of array A
+    r - the last element in array A
+    
+    Output:
+    Merged array A
+    '''
+    # YOUR CODE HERE
+    
+    #Initializing the array indexes from which the split happened
+    n1 = q - p +1
+    n2 = r-q
+
+    #Initializing sub arrays which will be corrected
+    L = [0] * (n1)
+    R = [0] * (n2)
+
+    #Looping through A to populate our sub arrays
+    for i in range(0,n1):
+        L[i] = A[p+i]
+ 
+    for j in range(0,n2):
+        R[j] = A[q+1+j]
+
+    #Initializing our sentinels as infinity end of the sub arrays
+    L.append(float('inf'))
+    R.append(float('inf')) 
+    
+    #Resetting our iterables to 0 in order to loop through the sub arrays and A
+    i = 0
+    j = 0
+
+    #Checking the values in the sub arrays and assigning them in the correct order to A
+    for k in range(p,r+1):
+        if L[i]<= R[j]:
+            A[k] = L[i]
+            i = i + 1
+            
+        else:
+            A[k] = R[j]
+            j = j + 1
+     
+    return A
+    
+def merge_sort(A,p,r):
+    
+    #Sets the recursion breaking condition
+    if p < r:
+         #Finds the lower mid point of the list
+        q = (p+r)//2
+        #Splits the input list to the base case which is an array of len 1
+        merge_sort(A,p,q)
+        merge_sort(A,q+1,r)
+        #Reassembles the sorted sub arrays into one sorted list
+        merge(A,p,q,r)
+    return(A)
+    
+    
