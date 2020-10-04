@@ -1,0 +1,74 @@
+def is_palindrome_iterative(word):
+    """
+    This function identifies whether a word is a palindrome iteratively.
+
+    Parameters
+    ----------
+    word : str
+        Word we wish to check
+    
+    Returns
+    -------
+    bool
+        True if input is a palindrome, False otherwise
+        
+    """
+    # YOUR CODE HERE
+    
+    char = str(word).lower()
+    size = len(char)
+    start = 0    
+    finish = size - 1
+    works = True 
+    
+    for i in char:
+        if char[start] == char[finish]:
+            start = start+1
+            finish = finish-1
+            return works
+        else:
+            works = False 
+    return works
+    
+def is_palindrome_recursive(word):
+    """
+    This function identifies whether a word is a palindrome recursively.
+
+    Parameters
+    ----------
+    word : str
+        Word we wish to check
+    
+    Returns
+    -------
+    boolean
+        True if input is a palindrome, False otherwise
+        
+    """
+    # YOUR CODE HERE
+    
+    #Allows us to pass integers as palindromes,
+    #and it does not demand for a string from people who do not understand what that means
+    new_word = str(word).lower()
+    
+    #Allows us to drop the first and last characters 
+    check_word = list(new_word)
+    
+    size= len(check_word)
+    beginning = 0
+    end=size - 1 
+    a_palindrome=True
+
+    if size <= 1: #To eliminate the possibility of exceeding maximum recursion depth
+        return True
+    
+    elif check_word[beginning] == check_word[end]: #Checks the characters to see if they are the same
+        
+        beginning = beginning + 1
+        end = end - 1        
+        is_palindrome_recursive(word[1:-1]) #Drops the first and last characters in the word
+        
+        return a_palindrome
+    
+    else:
+        return False
