@@ -1,0 +1,108 @@
+def merge_3_sort(array, p, q):
+    """
+    Sorts array[p] to array[q] in place.
+    Parameters
+    ----------
+    array : Python list or numpy array
+    p : int
+        index of array element to start sorting from
+    q : int
+        index of last array element to be sorted
+
+    Returns
+    -------
+    array: a sorted Python list
+
+    """
+    # check if more than one elements remain between array[p] and array[q]
+        # otherwise return the single element remaining
+    if q - p == 0:
+        return array
+    
+    if q > p:
+        # Calculate where one-third and two-thirds of the input array are
+        third = p + ((q - p) // 3)
+        two_thirds = p + (2 * ((q - p) // 3))
+        
+        # Call merge_3_sort() on the three sublists
+        merge_3_sort(array, p, third)
+        merge_3_sort(array, third + 1, two_thirds)
+        merge_3_sort(array, two_thirds + 1, q)
+        
+        # Call merge_3() on the three sorted sublists to combine them
+        # This can be either done as a return or in-place
+        merge_3(array, p, third, two_thirds, q)
+        
+        # return the sorted array    
+    return array
+
+def merge_3(array, p, q, r, s):
+    """
+    Merges 3 sorted sublists (array[p] to array[q], array[q+1] to array[r] and array[r+1] to array[s]) in place.
+
+    Parameters
+    ----------
+    array : Python list or numpy array
+    p : int
+        index of first element of first sublist
+    q : int
+        index of last element of first sublist
+    r : int
+        index of last element of second sublist
+    s : int
+        index of last element of third sublist
+
+    """
+    # copy each sublist to a placeholder in the 'elegant way' XD
+    left = array[p : q + 1] #Slice from p to q+1 and assign the elements to left
+    mid = array[q + 1 : r + 1]
+    right = array[r + 1 : s + 1]
+    
+    # append infinity to the end of each placeholder list
+    left.append(float("inf"))
+    mid.append(float("inf"))
+    right.append(float("inf"))
+    
+    #I am resetting these to zero because the comparison below uses these iterables and they need to start from the beginning
+    i, j, k = 0, 0, 0
+    
+    # fill each position in array[p] to array[q] 
+        # use the smallest of the front elements of the placeholder lists
+        
+    #This fills array with the smallest elements first based on comparison across all lists
+    for l in range(p, s+1):
+        if left[i] <= right[k] and left[i] <= mid[j]:
+            array[l] = left[i]
+            i += 1
+        elif mid[j] <= right[k] and mid[j] <= left[i]:
+            array[l] = mid[j]
+            j += 1
+        else:
+            array[l] = right[k]
+            k += 1
+            
+    return array
+    
+    
+input_array = [8, 5, 4, 6, 7, 2, 9, 1, 3]
+assert merge_3_sort(input_array, 0, 8) == sorted(input_array)
+# YOUR CODE HERE
+
+#Edge cases
+print('Make sure my algorithm is not writing values that it was not given:',merge_3_sort ([], 0, 0))   #should return empty list
+assert merge_3_sort([0, 0], 0, 1) == [0, 0]   
+assert merge_3_sort([1,-1], 0, 1) == [-1,1]
+
+#Sample cases
+assert merge_3_sort([-1,-2,-3], 0, 2) == [-3,-2,-1]
+assert merge_3_sort([1, 2, 3], 0, 2) == [1, 2, 3]
+assert merge_3_sort([1, 2, 3, 3], 0, 3) == [1, 2, 3, 3]
+
+#Stress cases
+random.seed(2)  #So that you can reproduce the results
+lst1 = []
+for i in range(1000):
+    lst1.append(random.randint(-10,100))
+sort1 = sorted(lst1)
+assert(merge_3_sort(lst1, 0, 999) == sort1)
+
