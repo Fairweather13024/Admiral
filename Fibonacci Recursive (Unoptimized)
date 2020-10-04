@@ -1,0 +1,31 @@
+def fibonacci_recursive(n):
+    """
+    Finds the nth Fibonacci number as specified by the user, using recursion
+
+
+    Parameters
+    ----------
+    n - The nth Fibonacci number that the user is interested in
+    
+    Returns
+    -------
+    nth_term - The Fibonacci term that corresponds to the number that the user passed
+
+    """
+    #Checking if for positive integer because we do not have negative Fibonacci terms
+    if n < 0:
+        raise ValueError('Your input must be a positive integer')
+    
+    #Returning either of the first 2 Fibonacci numbers (0 and 1) which are both below 2 because they are their own Fibonacci terms
+    elif n < 2:
+        return n
+    #Recursively calling the function to the base case of 0 and 1
+    else:
+        nth_term = fibonacci_recursive(n-1) + fibonacci_recursive(n-2) #The sum of the previous Fibonacci numbers
+    return nth_term
+
+#Calling the function with the constraint of passing an integer which is the only type() that the function accepts
+fibonacci_recursive(int(input ('Input a number for the nth number of the Fibonacci sequence term: ')))
+
+
+assert fibonacci_recursive(0) == 0
