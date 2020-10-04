@@ -1,0 +1,153 @@
+def left(i):
+    '''
+    The function calculates the index of a child node on the left side.
+    
+    input:
+    i - The index of the parent node
+    
+    Output:
+    The index of the child node on the left side
+    '''
+    # YOUR CODE HERE
+    return (2*i) + 1 #Calculates the index of the left child from index i and returns that index
+    
+def right(i):
+    '''
+    The function calculates the index of a child node on the right side.
+    
+    input:
+    i - The index of the parent node
+    
+    Output:
+    The index of the child node on the right side
+    '''    
+    # YOUR CODE HERE
+    return (2*i) + 2 #Calculates the index of the right child from index i and returns that index
+    
+def heapify(heap, i):
+    """
+    Parameters
+    ----------
+    heap : list of floats
+        Assume that the heap size is the length of the heap
+        
+    Note
+    ----
+    No output is needed. This function should modify (if necessary) 
+    heap in-place.
+    
+    """
+    # YOUR CODE HERE
+    Left = left(i) #Takes the indices of the right and left parent node
+    Right = right(i)
+    
+    #COmpares the parent nmode with teh left and right child nodes
+    if Left < len(heap) and heap[Left] > heap[i]:
+        largest = Left #Stores the largest value of the three in the variable largest
+    else:
+        largest = i
+    #Repeats the same process for teh right side of the heap
+    if Right < len(heap) and heap[Right] > heap[largest]:
+        largest = Right
+    if largest != i:
+        heap[i], heap[largest] = heap[largest], heap[i]
+        
+        heapify(heap, largest)
+        
+        
+   def build_max_heap(A):
+    """
+    Parameters
+    ----------
+    A : a list of floats
+    
+    Note
+    ----
+    No output is needed. The function should turn A into 
+    a valid max heap, in-place.
+    
+    """
+    # YOUR CODE HERE
+    heap_size = len(A) 
+    for i in range(heap_size//2 , -1, -1): #Runs the heap exhange mechanism one by one from the child nodes to the root node
+        heapify(A,i) #Reorders them using the heapify function to take the structure of a sorted heap
+        
+  def min_heapify(heap, i):
+    """
+    Parameters
+    ----------
+    heap : a list of floats
+        Assume that the heap size is the length of the heap.
+    
+    Note
+    ----
+    No output is needed. This function should modify (if necessary) 
+    heap in-place.
+    
+    """
+    # YOUR CODE HERE
+    Left = left(i) #Getting the indices of the right and left of the parent node
+    Right = right(i)
+    
+    #Comparing the parent and child nodes to find the smallest value among them
+    if Left < len(heap) and heap[Left] < heap[i]:
+        smallest = Left #Storing the smallest function
+    else:
+        smallest = i
+        
+    if Right < len(heap) and heap[Right] < heap[smallest]:
+        smallest = Right
+    if smallest != i:
+        heap[i], heap[smallest] = heap[smallest], heap[i] #Making the exchange if the smallest node is not the parent node
+        
+        heapify(heap, smallest)
+        
+def min_heapify(heap, i):
+    """
+    Parameters
+    ----------
+    heap : a list of floats
+        Assume that the heap size is the length of the heap.
+    
+    Note
+    ----
+    No output is needed. This function should modify (if necessary) 
+    heap in-place.
+    
+    """
+    # YOUR CODE HERE
+    Left = left(i) #Getting the indices of the right and left of the parent node
+    Right = right(i)
+    
+    #Comparing the parent and child nodes to find the smallest value among them
+    if Left < len(heap) and heap[Left] < heap[i]:
+        smallest = Left #Storing the smallest function
+    else:
+        smallest = i
+        
+    if Right < len(heap) and heap[Right] < heap[smallest]:
+        smallest = Right
+    if smallest != i:
+        heap[i], heap[smallest] = heap[smallest], heap[i] #Making the exchange if the smallest node is not the parent node
+        
+        heapify(heap, smallest)
+        
+def build_min_heap(A):
+    """
+    Parameters
+    ----------
+    A : a list of floats
+    
+    Note
+    ----
+    No output is needed. The function should turn A into 
+    a valid min heap, in-place.
+    
+    """
+    # YOUR CODE HERE
+    heap_size = len(A) 
+    for i in range(heap_size//2 , -1, -1): #Running the min_heapify function from the centre to the top to make the sorted heap structure
+        min_heapify(A,i)
+        
+    return A
+    
