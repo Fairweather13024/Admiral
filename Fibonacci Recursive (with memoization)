@@ -1,0 +1,52 @@
+#Raising the recursion limit to 5000
+import sys  
+sys.setrecursionlimit(5000)
+
+#Storing the base case Fibonacci terms in a dictionary to be accessed during recursion
+cache = {1:0, 2:1} 
+
+def fibonacci_recursive_optimized(n):
+    """
+    Finds the nth Fibonacci number as specified by the user, using a recursive function that is 
+    optimized by dynamic programming.
+
+
+    Parameters
+    ----------
+    n - The nth Fibonacci number that the user is interested in
+    
+    Returns
+    -------
+    nth_term - The Fibonacci term that corresponds to the number that the user passed
+
+    """
+    
+    global cache    #Declaring the dictionary of Fibonacci as a global variable so that we can access it in the function ouput
+    
+    #Checking if they passed a positive intteger as input because we have no negative Fibonacci terms
+    if n < 0:
+        raise ValueError('Your input must be a positive integer')
+        
+    #Returning the number they passed if they passed the base case terms as an argument    
+    if n < 2:
+        return n
+    
+    #Calling already stored terms if the key exists in the dictionary
+    if n in cache:
+        return cache[n]
+    #Finsing the nth terms by calling the function recursively to the base case
+    else:
+        nth_term = fibonacci_recursive_optimized(n-1) + fibonacci_recursive_optimized(n-2) #Summing the previous 2 Fibonacci numbers
+        cache[n] = nth_term  #Calling the value associated with the nth key in the dictionary
+
+    return nth_term
+
+print(fibonacci_recursive_optimized(int(input ('Input a number for the nth number of the Fibonacci sequence term: '))))
+#You may be interested in this, so I commented it out
+#print(cache)
+
+assert(fibonacci_recursive_optimized(0) == 0) #Edge case
+assert(fibonacci_recursive_optimized(4) == 3) #Sample case
+assert(fibonacci_recursive_optimized(10) == 55) #sample case
+#Stress case
+assert(fibonacci_recursive_optimized(2000) == 4224696333392304878706725602341482782579852840250681098010280137314308584370130707224123599639141511088446087538909603607640194711643596029271983312598737326253555802606991585915229492453904998722256795316982874482472992263901833716778060607011615497886719879858311468870876264597369086722884023654422295243347964480139515349562972087652656069529806499841977448720155612802665404554171717881930324025204312082516817125)
