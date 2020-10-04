@@ -1,0 +1,39 @@
+def insertion_sort_1(A):
+    '''
+    Sorts array 'A' in ascending order in place.
+
+
+    Parameters
+    ----------
+    Array 'A'
+
+    Returns
+    -------
+    array: a sorted Python list
+    '''
+    # YOUR CODE HERE
+    #The range MUST go back to 1 for true sorting to exist, so that i can go to 0
+    for j in range(1, len(A)):
+        #seems like the loop invariant will start at A[0]:A[1]
+        
+        key = A[j] #The element from position 3 to the end of the list
+        i= j-1 #Setting the comparing index as the previous index from j (checking rom the left)
+        
+        #The indices must stay positive otherwise swaps will occur at the right side of the list, hence running a fault
+        #The checking is done to the left of the key, to pdate the loop invariant
+        while i >= 0 and A[i]>key:
+            #Swapping mechanism between A[j] and A[i]
+            A[i+1] = A[i]
+            #Makes sure the checking resumes at the left of the swapped items to see if the list is in order
+            i -= 1
+            
+        A[i+1] = key
+    return A
+
+
+
+assert(insertion_sort([0]) == 0) #Edge cases
+assert(insertion_sort([-1,1]) == 0)
+assert(insertion_sort([1,-1]) == 1)
+assert(insertion_sort([1,6,3,6]) == 1) #Sample cases
+assert(insertion_sort([7, 3, 5, 4, 6, 4]) == 8)
