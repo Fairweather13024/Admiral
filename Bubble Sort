@@ -1,0 +1,35 @@
+def bubble_sort(A):
+
+    '''
+    Sorts array 'A' in ascending order in place.
+
+
+    Parameters
+    ----------
+    Array 'A'
+
+    Returns
+    -------
+    array: a sorted Python list
+    '''
+    #The loop goes through the maximum number of permutations, ensuring every value is checked
+    for i in range(0, len(A)-1):
+        #The loop only checks from the first element onwards because it will use that to check the next element
+        for j in range(len(A)-1, i, -1):
+            #Setting the element to the left of the iterable to allow comparisson
+            
+            c = j-1
+            #Comparing the element to that on its left
+            if A[j] < A[c]:
+                #Exchanging the indices of teh elements in place
+                A[j-1] , A[j] = A[j] , A[j-1]
+
+    return A
+    
+
+
+assert(bubble_sort([0]) == 0) #Edge cases
+assert(bubble_sort([-1,1]) == 0)
+assert(bubble_sort([1,-1]) == 2)
+assert(bubble_sort([1,6,3,6]) == 2) #Sample cases with load
+assert(bubble_sort([7, 3, 5, 4, 6, 4]) == 16)
