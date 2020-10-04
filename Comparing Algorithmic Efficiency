@@ -1,0 +1,38 @@
+'''
+Generate a thousand lists of incremental size and plot their run times so as to do some asymptotic analysis.
+The code can be edited to incorporate however many algorithms you want to run.
+This code works exactly the same way as the other one
+'''
+n = [i for i in range(1000)]
+merge_3_sort_time = []
+merge_3_sort_threshold_time = []
+merge_3_sort_avg_time = []
+merge_3_sort_threshold_avg_time = []
+
+for i in n:
+
+    lst = random.sample(range(1000),i)
+    p = 0
+    q= len(lst) - 1
+    beginning = time.time()                     
+    merge_3_sort(lst, p, q)               
+    end = time.time()                      
+    merge_3_sort_time.append(end - beginning)  
+
+    beginning1 = time.time()                     
+    merge_3_sort_threshold(lst, p, q)               
+    end1 = time.time()
+    merge_3_sort_threshold_time.append(end1 - beginning1) 
+
+    merge_3_sort_avg_time.append(np.mean(merge_3_sort_time))
+    merge_3_sort_threshold_avg_time.append(np.mean(merge_3_sort_threshold_time))
+
+plt.figure(figsize=(8, 6))
+plt.plot(range(1, 1001), merge_3_sort_avg_time, label = "Merge_3_sort_time")
+plt.plot(range(1, 1001), merge_3_sort_threshold_avg_time, label = "Merge_3_sort_threshold_time")
+
+plt.xlabel("Input Size (n)")
+plt.ylabel("Average Time (s)")
+plt.legend()
+plt.title("Graph of the Average Duration for Merge Sort and Merge Sort with Bubble Sort for Growing Input Sizes")
+plt.show()
