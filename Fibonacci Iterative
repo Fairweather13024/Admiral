@@ -1,0 +1,37 @@
+def fibonacci_iterative(n):
+    """
+    Finds the nth Fibonacci number as specified by the user, using iteration
+
+
+    Parameters
+    ----------
+    n - The nth Fibonacci number that the user is interested in
+    
+    Returns
+    -------
+    nth_term - The Fibonacci term that corresponds to the number that the user passed
+
+    """
+    
+    third = 0     #Declaring the next Fibonacci number variable
+    nth_term = 0   #Variable that accesses the nth term that the user seeks 
+    
+    sequence = [0, 1] #The first two Fibonacci numbers which assist the algorithm in calculating therein
+
+    #Checking if for positive integer because we do not have negative nth terms
+    if n < 0:
+        raise ValueError('Your input must be a positive integer')
+
+    else:
+        for i in range(n-1):
+            third = sequence[-1] + sequence[-2]   #generating the next Fibonacci number
+            sequence.append(third)    #Updating the list with the Fibonacci numbers
+            nth_term = sequence[-1]     #Calling the nth Fibonacci number from the sequence
+        #return f'The {n}th Fibonacci term is ' + str(nth_term)
+
+    return nth_term
+#Calling the function with the constraint that the input must be an integer
+fibonacci_iterative(int(input('Input a number for the nth term of the Fibonacci sequence: '))) 
+
+
+assert fibonacci_iterative(0) == 0
